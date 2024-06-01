@@ -16,7 +16,6 @@
 /*main container of the app */
 
 body{
-    position: relative;
 }
 
 
@@ -27,6 +26,7 @@ body{
     flex-direction: column;
     z-index: 1;
     background-color: var(--white);
+    position: relative;
 }
 
 .backdrop{
@@ -38,6 +38,8 @@ body{
     z-index: 2;
     background-color: rgba(0,0,0,.4);
     display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -101,6 +103,8 @@ body{
 .products-container{
     padding: 2.5rem 1rem;
     width: 100%;
+    position: relative;
+    z-index: -1;
 }
 
 .products{
@@ -113,7 +117,6 @@ body{
 
 .product{
     border-radius: .8rem;
-    border: 1px solid red;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -176,11 +179,12 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
+    height: 100vh;
     z-index: 2;
     display: none;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .cart-modal{
@@ -190,7 +194,7 @@ body{
     max-height: 70%;
     height: 40%;
     max-width: 100%;
-    width: 30%;
+    min-width: 30%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -306,4 +310,19 @@ body{
 
 .show-modal{
     display: flex;
+}
+
+
+@media screen and (max-width: 750px) {
+    .products{
+        gap: .5rem;
+    }
+    .product{
+        flex-basis: 100%;
+    }
+
+}
+
+.product-count-btn i{
+    pointer-events: none;
 }
