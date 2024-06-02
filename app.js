@@ -7,22 +7,41 @@ const cartBtn = document.querySelector(".navbar-cart-btn")
 const productsDom = document.querySelector(".products")
 const cartProductsContainer = document.querySelector(".cart-products")
 const cartCounterDom = document.querySelector(".cart-counter")
+const cartTotalPrice = document.querySelector(".cart-total-price")
+const cartClearBtn = document.querySelector(".cart-clear-btn")
+const modalCloseBtn = document.querySelector(".cart-submit-btn")
 
 // this functions handles showing the modals
 cartBtn.addEventListener("click", showModal)
 
+modalCloseBtn.addEventListener("click" , showModal)
+
+// clear the cart
+cartClearBtn.addEventListener("click", () => {
+    const ui = new Ui()
+    const products = new Products()
+    Storage.clearCart()
+    ui.displayCartProductsCount()
+    Storage.calculateCartTotalPrice()
+    showModal()
+    ui.displayProducts(products.getProducts())
+    ui.getAddToCartBtns()
+})
+
 function showModal() {
     modal.classList.toggle("show-modal")
     backDrop.classList.toggle("show-modal")
-    document.body.style = `overflow : hidden `
+    if (backDrop.classList.contains("show-modal")) {
+        document.body.style = `overflow : hidden `
+    }else {
+        document.body.style =`overflow : auto`
+    }
     let cartProducts = Storage.getCartProducts()
     let ui = new Ui()
+    Storage.calculateCartTotalPrice()
     ui.displayCartProducts(cartProducts)
 
 }
-
-//1.get products
-//2.showProducts
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = new Products()
@@ -32,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ui.getAddToCartBtns()
     ui.displayCartProductsCount()
     Storage.saveProducts(productsData)
+    Storage.calculateCartTotalPrice()
 })
 
 //define the Products class
@@ -41,6 +61,7 @@ class Products {
     }
 }
 
+// define a class for ui actions
 class Ui {
     displayProducts(productsData) {
         let result = productsData.map(product => {
@@ -67,7 +88,7 @@ class Ui {
         let addToCartBtns = document.querySelectorAll(".product-btn")
         const buttons = [...addToCartBtns]
         buttons.forEach(btn => {
-            const isInCart = Storage.checkInCart(btn.dataset.id)
+            const isInCart = Storage.checkInCart(Number(btn.dataset.id))
             if (isInCart) {
                 btn.innerText = "in cart"
                 btn.disabled = true
@@ -77,7 +98,7 @@ class Ui {
                 let product = new Products()
                 btn.innerText = "in cart"
                 let savedProducts = product.getProducts()
-                let productToAddToCart = savedProducts.find(p => p.id = event.target.dataset.id)
+                let productToAddToCart = savedProducts.find(p => p.id === Number(event.target.dataset.id))
                 Storage.saveCartToLS(productToAddToCart)
                 ui.displayCartProductsCount()
             })
@@ -117,6 +138,7 @@ class Ui {
         cartProductsContainer.innerHTML = result
         ui.getIncreaseCartProductBtns()
         ui.getDecreaseCartProductBtns()
+        ui.getDeleteCartProductBtn()
     }
 
     getIncreaseCartProductBtns() {
@@ -124,7 +146,7 @@ class Ui {
         const buttons = [...increaseBtns]
         buttons.forEach(btn => {
             btn.addEventListener("click", (e) => {
-                Storage.controlCartProductsCount({id: e.target.dataset.id, action: "increase"})
+                Storage.controlCartProductsCount({id: Number(e.target.dataset.id), action: "increase"})
             })
         })
 
@@ -135,10 +157,20 @@ class Ui {
         const buttons = [...decreaseBtns]
         buttons.forEach(btn => {
             btn.addEventListener("click", (e) => {
-                Storage.controlCartProductsCount({id: e.target.dataset.id, action: "decrease"})
+                Storage.controlCartProductsCount({id: Number(e.target.dataset.id), action: "decrease"})
             })
         })
 
+    }
+
+    getDeleteCartProductBtn() {
+        let deleteBtns = document.querySelectorAll(".cart-delete-btn")
+        let buttons = [...deleteBtns]
+        buttons.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                Storage.deleteProductFromCart(e.target.dataset.id)
+            })
+        })
     }
 
     displayCartProductsCount() {
@@ -147,6 +179,7 @@ class Ui {
     }
 }
 
+// a class for saving and data storage actions
 class Storage {
     static saveProducts(products) {
         localStorage.setItem("products", JSON.stringify(products))
@@ -184,13 +217,38 @@ class Storage {
         })
         this.saveProductsToCart(editedCountProducts)
         const ui = new Ui()
+        this.calculateCartTotalPrice()
         ui.displayCartProducts()
     }
 
     static calculateCartTotalPrice() {
-        let totalPrice;
-        const cartProducts = JSON.parse(localStorage.getItem("cartProducts"))
-        cartProducts.forEach(cp => totalPrice+=cp.price)
+        const cartProducts = this.getCartProducts();
+        let totalPrice = cartProducts.reduce((acc, cv) => {
+            return acc + (Number(cv.price) * Number(cv.count));
+        }, 0);
+        cartTotalPrice.innerText = `${totalPrice.toFixed(2)} $`;
+        return totalPrice;
+    }
+
+    static clearCart() {
+        let empty = []
+        localStorage.setItem("cartProducts", JSON.stringify(empty))
+        const ui = new Ui()
+        ui.displayCartProducts()
+    }
+
+    static deleteProductFromCart(id) {
+        id = Number(id)
+        const ui = new Ui()
+        const products = new Products()
+        const savedProductsInCart = JSON.parse(localStorage.getItem("cartProducts"))
+        const filteredProducts = savedProductsInCart.filter(product => product.id !== id)
+        this.saveProductsToCart(filteredProducts)
+        this.calculateCartTotalPrice()
+        ui.displayProducts(products.getProducts())
+        ui.getAddToCartBtns()
+        ui.displayCartProductsCount()
+        ui.displayCartProducts()
     }
 }
 

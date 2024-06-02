@@ -11,140 +11,43 @@
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
     </head>
     <body>
-        <div class="main-container">
-            <div class="backdrop">
-                <section class="cart-modal-container">
-                    <section class="cart-modal">
-                        <div class="cart-title">
-                            <h3>your cart</h3>
-                        </div>
-                        <div class="cart-products">
-                            <div class="cart-product">
-                                <div class="cart-product-image">
-                                    <img src="assets/images/images.jpg" alt="bed">
+        <main>
+            <div class="main-container">
+                <!--            the application header section -->
+                <header class="header">
+                    <nav class="header-navbar">
+                        <button class="navbar-btn navbar-menu-btn">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <h3 class="navbar-title">sorans cart</h3>
+                        <button class="navbar-btn navbar-cart-btn">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="cart-counter">1</span>
+                        </button>
+                    </nav>
+                </header>
+                <!--            the main section of the app => products-->
+                <section class="products-container">
+                    <div class="backdrop">
+                        <section class="cart-modal-container">
+                            <section class="cart-modal">
+                                <div class="cart-title">
+                                    <h3>your cart</h3>
                                 </div>
-                                <div class="cart-product-descriptions">
-                                    <p class="cart-product-title">Sorans Panel Bed</p>
-                                    <p class="cart-product-price">150$</p>
+                                <div class="cart-products"></div>
+                                <div class="cart-actions">
+                                    <p class="cart-total-price">total price : 37.97$</p>
+                                    <button class="cart-btn cart-submit-btn">confirm</button>
+                                    <button class="cart-btn cart-clear-btn">clear</button>
                                 </div>
-                                <div class="cart-product-actions">
-                                    <div class="cart-inc-dec">
-                                        <button class="increase-product-count product-count-btn">
-                                            <i class="fa fa-chevron-up"></i>
-                                        </button>
-                                        <p class="cart-items-number">2</p>
-                                        <button class="decrease-product-count product-count-btn">
-                                            <i class="fa fa-chevron-down"></i>
-                                        </button>
-                                    </div>
-                                    <div class="cart-delete">
-                                        <button class="cart-delete-btn product-count-btn">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cart-actions">
-                            <p class="cart-total-price">total price : 37.97$</p>
-                            <button class="cart-btn cart-submit-btn">confirm</button>
-                            <button class="cart-btn cart-clear-btn">clear</button>
-                        </div>
-                    </section>
+                            </section>
+                        </section>
+                    </div>
+                    <div class="products"></div>
                 </section>
-
+                <!--            cart modal section-->
             </div>
-            <!--            the application header section -->
-            <header class="header">
-                <nav class="header-navbar">
-                    <button class="navbar-btn navbar-menu-btn">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <h3 class="navbar-title">sorans cart</h3>
-                    <button class="navbar-btn navbar-cart-btn">
-                        <i class="fa fa-shopping-cart"></i>
-                        <span class="cart-counter">1</span>
-                    </button>
-                </nav>
-            </header>
-
-            <!--            the main section of the app => products-->
-            <section class="products-container">
-                <div class="products">
-                    <div class="product">
-                        <div class="product-image-container">
-                            <img src="assets/images/images.jpg" alt="bed">
-                        </div>
-                        <div class="product-details">
-                            <div class="product-description">
-                                <p class="price">100$</p>
-                                <p class="name">folan beed takht</p>
-                            </div>
-                            <div class="product-Addition">
-                                <button class="product-btn">Add To cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="product-image-container">
-                            <img src="assets/images/images.jpg" alt="ned">
-                        </div>
-                        <div class="product-details">
-                            <div class="product-description">
-                                <p class="price">100$</p>
-                                <p class="name">folan beed takht</p>
-                            </div>
-                            <div class="product-Addition">
-                                <button class="product-btn">Add To cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="product-image-container">
-                            <img src="assets/images/images.jpg" alt="ned">
-                        </div>
-                        <div class="product-details">
-                            <div class="product-description">
-                                <p class="price">100$</p>
-                                <p class="name">folan beed takht</p>
-                            </div>
-                            <div class="product-Addition">
-                                <button class="product-btn">Add To cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="product-image-container">
-                            <img src="assets/images/images.jpg" alt="ned">
-                        </div>
-                        <div class="product-details">
-                            <div class="product-description">
-                                <p class="price">100$</p>
-                                <p class="name">folan beed takht</p>
-                            </div>
-                            <div class="product-Addition">
-                                <button class="product-btn">Add To cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product">
-                        <div class="product-image-container">
-                            <img src="assets/images/images.jpg" alt="ned">
-                        </div>
-                        <div class="product-details">
-                            <div class="product-description">
-                                <p class="price">100$</p>
-                                <p class="name">folan beed takht</p>
-                            </div>
-                            <div class="product-Addition">
-                                <button class="product-btn">Add To cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!--            cart modal section-->
-        </div>
+        </main>
         <script type="module" src="app.js"></script>
     </body>
 </html>
